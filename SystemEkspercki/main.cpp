@@ -19,7 +19,7 @@ void printDataBase(vector <Place> dataBase)
 			cout << "Object nr. " + to_string(i + 1) << endl;
 			cout << "Country: " + dataBase[i].getCountry(1) << endl;
 			cout << "City: " + dataBase[i].getCity(1) << endl;
-			cout << "Type of rest: " + dataBase[i].getTypeOfRest(1) << endl;
+			cout << "Rest type: " + dataBase[i].getTypeOfRest(1) << endl;
 			if (dataBase[i].getCostOfRest() == 0)
 			{
 				cout << "Cost of rest: Free" << endl;
@@ -116,7 +116,7 @@ int printMenuAndTakeInput()
 	cout << "1. Print database" << endl;
 	cout << "2. Add an object to the database" << endl;
 	cout << "3. Find a place for a trip" << endl;
-	cout << "4. Close a program" << endl;
+	cout << "4. Exit" << endl;
 	return insertDataInt("Your choice: ", 4);
 }
 

@@ -212,7 +212,7 @@ void generateData(vector<Place>& database, int howMany)
 	plik.close();
 	vector <string> purpose = {"sport","relax","food","art","culture","none"};
 	vector <string> transport = {"car","plane","ship","motorbike","any"};
-	vector <string> additionalActivities = {"concert", "museum", "horse ride", "quad ride", "balloon flight", "none"};
+	vector <string> additionalActivities = {"concert", "museum", "horse ride", "quad ride", "balloon flight", "other"};
 	TempPlace temp;
 	for (int i = 0; i < howMany; i++)
 	{

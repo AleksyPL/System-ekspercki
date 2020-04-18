@@ -141,7 +141,7 @@ int advice(vector<Place>& database)
 		}
 	}
 	{
-		cout << "What is your travel budget?" << endl;
+		cout << endl << "What is your travel budget?" << endl;
 		int questionCost = insertDataInt("Your budget in PLN: ", 10000);
 		deleteFromDataBase(database, "cost", to_string(questionCost));
 		if (databaseIsEmpty(database) == true)
@@ -150,13 +150,13 @@ int advice(vector<Place>& database)
 		}
 	}
 	{
-		cout << "What is your purpose in travel?" << endl;
+		cout << endl << "What is your purpose in travel?" << endl;
 		cout << "1. Sport" << endl;
 		cout << "2. Relax" << endl;
 		cout << "3. Food" << endl;
 		cout << "4. Art" << endl;
 		cout << "5. Culture" << endl;
-		cout << "6. None" << endl;
+		cout << "6. None of the above" << endl;
 		int questionPurpose = insertDataInt("Your choice: ", 6);
 		if (questionPurpose == 1)
 		{
@@ -188,7 +188,47 @@ int advice(vector<Place>& database)
 		}
 	}
 	{
-		cout << "How do you want to get to your vacation destination?" << endl;
+		cout << endl << "Which of the additional activity you would like to do during your vacation?" << endl;
+		cout << "1. Go to a concert" << endl;
+		cout << "2. Visit the museum" << endl;
+		cout << "3. Horse riding" << endl;
+		cout << "4. Quad riding" << endl;
+		cout << "5. Balloon flight" << endl;
+		cout << "6. Other" << endl;
+		cout << "7. Any" << endl;
+
+		int questionAdditional = insertDataInt("Your choice: ", 6);
+		if (questionAdditional == 1)
+		{
+			deleteFromDataBase(database, "additional", "concert");
+		}
+		else if (questionAdditional == 2)
+		{
+			deleteFromDataBase(database, "additional", "museum");
+		}
+		else if (questionAdditional == 3)
+		{
+			deleteFromDataBase(database, "additional", "horse ride");
+		}
+		else if (questionAdditional == 4)
+		{
+			deleteFromDataBase(database, "additional", "quad ride");
+		}
+		else if (questionAdditional == 5)
+		{
+			deleteFromDataBase(database, "additional", "balloon fight");
+		}
+		else if (questionAdditional == 6)
+		{
+			deleteFromDataBase(database, "additional", "other");
+		}
+		if (databaseIsEmpty(database) == true)
+		{
+			return 0;
+		}
+	}
+	{
+		cout << endl << "How do you want to get to your vacation destination?" << endl;
 		cout << "1. Car" << endl;
 		cout << "2. Plane" << endl;
 		cout << "3. Ship" << endl;
@@ -216,44 +256,7 @@ int advice(vector<Place>& database)
 			return 0;
 		}
 	}
-	{
-		cout << "Which of the additional activity you would like to do during your vacation?" << endl;
-		cout << "1. Go to a concert" << endl;
-		cout << "2. Visit the museum" << endl;
-		cout << "3. Horse riding" << endl;
-		cout << "4. Quad riding" << endl;
-		cout << "5. Balloon flight" << endl;
-		cout << "6. None of the above" << endl;
-		int questionAdditional = insertDataInt("Your choice: ", 6);
-		if (questionAdditional == 1)
-		{
-			deleteFromDataBase(database, "additional", "concert");
-		}
-		else if (questionAdditional == 2)
-		{
-			deleteFromDataBase(database, "additional", "museum");
-		}
-		else if (questionAdditional == 3)
-		{
-			deleteFromDataBase(database, "additional", "horse ride");
-		}
-		else if (questionAdditional == 4)
-		{
-			deleteFromDataBase(database, "additional", "quad ride");
-		}
-		else if (questionAdditional == 5)
-		{
-			deleteFromDataBase(database, "additional", "balloon fight");
-		}
-		else if (questionAdditional == 6)
-		{
-			deleteFromDataBase(database, "additional", "none");
-		}
-		if (databaseIsEmpty(database) == true)
-		{
-			return 0;
-		}
-	}
+
 	printResult(database);
 	return 0;
 }
