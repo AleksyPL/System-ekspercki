@@ -21,7 +21,6 @@ int insertDataInt(string comment, int max)
 		return 0;
 	}
 	return 0;
-
 }
 string insertDataString(string comment)
 {

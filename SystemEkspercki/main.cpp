@@ -44,8 +44,7 @@ void printDataBase(vector <Place> dataBase)
 				{
 					cout << "1. Show previous object" << endl;
 					cout << "2. Close database preview" << endl;
-					int choice = insertDataInt("Your choice: ", 2);
-					switch (choice)
+					switch (insertDataInt("Your choice: ", 2))
 					{
 					case 1: 
 					{
@@ -64,8 +63,7 @@ void printDataBase(vector <Place> dataBase)
 					cout << "1. Show previous object" << endl;
 					cout << "2. Show next object" << endl;
 					cout << "3. Close database preview" << endl;
-					int choice = insertDataInt("Your choice: ", 3);
-					switch (choice)
+					switch (insertDataInt("Your choice: ", 3))
 					{
 					case 1:
 					{
@@ -89,8 +87,7 @@ void printDataBase(vector <Place> dataBase)
 			{
 				cout << "1. Show next object" << endl;
 				cout << "2. Close database preview" << endl;
-				int choice = insertDataInt("Your choice: ", 2);
-				switch (choice)
+				switch (insertDataInt("Your choice: ", 2))
 				{
 				case 1:
 				{
@@ -129,8 +126,7 @@ int main()
 	while (1)
 	{
 		loadData(dataBase);
-		int menuInput = printMenuAndTakeInput();
-		switch (menuInput)
+		switch (printMenuAndTakeInput())
 		{
 		case 1:
 		{

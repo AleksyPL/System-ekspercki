@@ -32,8 +32,13 @@ void TempPlace::copyData(vector<Place>& database)
 }
 void TempPlace::isValid(vector<Place>& database)
 {
-	if (this->getCountry() != "" && this->getCity() != "" && (this->getTypeOfRest() == "active" || this->getTypeOfRest() == "passive")
-		&& this->getAdditionalActivitiesName() !="" && this->getPurposeOfRest() != "" && this->getTransportToThePlaceOfRest() != "")
+	vector <string> purpose = { "sport","relax","food","art","culture","none" };
+	vector <string> additionalActivities = { "concert", "museum", "horse ride", "quad ride", "balloon flight", "none" };
+	vector <string> transport = { "car","plane","ship","motorbike","any" };
+	if (this->getCountry() != "" && this->getCity() != "" && this->getTypeOfRest() !="active" && this->getTypeOfRest() != "passive"
+		&& std::find(additionalActivities.begin(), additionalActivities.end(), this->getAdditionalActivitiesName()) != additionalActivities.end()
+		&& std::find(purpose.begin(), purpose.end(), this->getPurposeOfRest()) != purpose.end()
+		&& std::find(transport.begin(), transport.end(), this->getTransportToThePlaceOfRest()) != transport.end())
 	{
 		if (alreadyInDataBase(*this, database) == false)
 		{
@@ -52,7 +57,7 @@ void TempPlace::isValid(vector<Place>& database)
 }
 bool alreadyInDataBase(TempPlace temp, vector<Place>& database)
 {
-	for (int i = 0; i < database.size(); i++)
+	for (int i = 0; i < (int)database.size(); i++)
 	{
 		if (temp.getCountry() == database[i].getCountry())
 		{
@@ -140,7 +145,7 @@ void overrideDataBase(vector<Place>& database)
 	fstream plik;
 	remove("./DataBase.txt");
 	plik.open("./DataBase.txt", ios::out);
-	for (int i = 0; i < database.size(); i++)
+	for (int i = 0; i < (int)database.size(); i++)
 	{
 		plik << database[i].getCountry() << endl;
 		plik << database[i].getCity() << endl;
@@ -170,16 +175,16 @@ void addData(vector<Place> &database)
 	tempObject.setCity(insertDataString("Insert a city: "));
 	tempObject.setCostOfRest(insertDataInt("Insert a cost of rest in PLN: ", 10000));
 	tempObject.setTypeOfRest(stringToLower(insertDataString("Insert a type of rest (active or passive): ")));
-	tempObject.setPurposeOfRest(insertDataString("Insert a purpose of rest: "));
-	tempObject.setAdditionalActivitiesName(insertDataString("Insert an additional activity name: "));
-	tempObject.setTransportToThePlaceOfRest(insertDataString("Insert a transport to rest place method: "));
+	tempObject.setPurposeOfRest(insertDataString("Insert a purpose of rest (sport, relax, food, art, culture, none): "));
+	tempObject.setAdditionalActivitiesName(insertDataString("Insert an additional activity name (concert, museum, horse ride, quad ride, balloon flight, none): "));
+	tempObject.setTransportToThePlaceOfRest(insertDataString("Insert a transport to rest place method (car, plane, ship, motorbike, any): "));
 	tempObject.isValid(database);
 	overrideDataBase(database);
 	loadData(database);
 }
 void generateData(vector<Place>& database, int howMany)
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	vector <string> countries;
 	string linia;
 	fstream plik;
@@ -211,8 +216,8 @@ void generateData(vector<Place>& database, int howMany)
 	}
 	plik.close();
 	vector <string> purpose = {"sport","relax","food","art","culture","none"};
+	vector <string> additionalActivities = { "concert", "museum", "horse ride", "quad ride", "balloon flight", "none" };
 	vector <string> transport = {"car","plane","ship","motorbike","any"};
-	vector <string> additionalActivities = {"concert", "museum", "horse ride", "quad ride", "balloon flight", "other"};
 	TempPlace temp;
 	for (int i = 0; i < howMany; i++)
 	{

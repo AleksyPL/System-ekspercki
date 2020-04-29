@@ -72,7 +72,7 @@ void deleteFromDataBase(vector<Place>& database, string question, string answer)
 }
 bool databaseIsEmpty(vector<Place>& database)
 {
-	if (database.size() == 0)
+	if ((int)database.size() == 0)
 	{
 		cout << "None of the solutions in the database overlap with your answers." << endl;
 		system("PAUSE");
@@ -156,7 +156,7 @@ int advice(vector<Place>& database)
 		cout << "3. Food" << endl;
 		cout << "4. Art" << endl;
 		cout << "5. Culture" << endl;
-		cout << "6. None of the above" << endl;
+		cout << "6. None" << endl;
 		int questionPurpose = insertDataInt("Your choice: ", 6);
 		if (questionPurpose == 1)
 		{
@@ -220,7 +220,7 @@ int advice(vector<Place>& database)
 		}
 		else if (questionAdditional == 6)
 		{
-			deleteFromDataBase(database, "additional", "other");
+			deleteFromDataBase(database, "additional", "none");
 		}
 		if (databaseIsEmpty(database) == true)
 		{
