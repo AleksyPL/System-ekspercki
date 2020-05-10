@@ -15,6 +15,6 @@ using std::fstream;
 using std::ios;
 using std::to_string;
 
-string stringToLower(string data);
-int insertDataInt(string comment, int max);
-string insertDataString(string comment);
+string stringToLower(string data); //zmienia dany string na ma³e litery
+int insertDataInt(string comment, int max); //funkcja do pobierania liczby na bazie stringa
+string insertDataString(string comment); //funkcja do pobierania stringa

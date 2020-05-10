@@ -1,5 +1,6 @@
 #include "place.h"
 
+//konstruktor
 Place::Place()
 {
 	this->country = "";
@@ -10,7 +11,7 @@ Place::Place()
 	this->additionalActivitiesName = "";
 	this->transportToThePlaceOfRest = "";
 }
-
+//funkcja do otrzymywania nazwy pañstwa
 string Place::getCountry(bool firstBig)
 {
 	if (firstBig == true)
@@ -24,13 +25,13 @@ string Place::getCountry(bool firstBig)
 		return this->country;
 	}
 }
-
+//funkcja do zapisania nazwy pañstwa
 void Place::setCountry(string country)
 {
 	country = stringToLower(country);
 	this->country = country;
 }
-
+//funkcja do otrzymania nazwy miasta
 string Place::getCity(bool firstBig)
 {
 	if (firstBig == true)
@@ -44,18 +45,18 @@ string Place::getCity(bool firstBig)
 		return this->city;
 	}
 }
-
+//funkcja do zapisania nazwy miasta
 void Place::setCity(string city)
 {
 	city = stringToLower(city);
 	this->city = city;
 }
-
+//funkcja do otrzymania kosztu wypoczynku
 int Place::getCostOfRest()
 {
 	return this->costOfRest;
 }
-
+//funkcja do zapisania kosztu wypoczynku
 void Place::setCostOfRest(int cost)
 {
 	try
@@ -67,7 +68,7 @@ void Place::setCostOfRest(int cost)
 		;
 	}
 }
-
+//funkcja do otrzymania typu wypoczynku
 string Place::getTypeOfRest(bool firstBig)
 {
 	if (firstBig == true)
@@ -81,13 +82,13 @@ string Place::getTypeOfRest(bool firstBig)
 		return this->typeOfRest;
 	}
 }
-
+//funkcja do zapisania typu wypoczynku
 void Place::setTypeOfRest(string typeName)
 {
 	typeName = stringToLower(typeName);
 	this->typeOfRest = typeName;
 }
-
+//funkcja do otrzymania powodu wypoczynku
 string Place::getPurposeOfRest(bool firstBig)
 {
 	if (firstBig == true)
@@ -101,13 +102,13 @@ string Place::getPurposeOfRest(bool firstBig)
 		return this->purposeOfRest;
 	}
 }
-
+//funkcja do zapisania powodu wypoczynku
 void Place::setPurposeOfRest(string purpose)
 {
 	purpose = stringToLower(purpose);
 	this->purposeOfRest = purpose;
 }
-
+//funkcja do otrzymania nazwy dodatkowej atrakcji
 string Place::getAdditionalActivitiesName(bool firstBig)
 {
 	if (firstBig == true)
@@ -121,13 +122,13 @@ string Place::getAdditionalActivitiesName(bool firstBig)
 		return this->additionalActivitiesName;
 	}
 }
-
+//funkcja do zapisania nazwy dodatkowej atrakcji
 void Place::setAdditionalActivitiesName(string name)
 {
 	name = stringToLower(name);
 	this->additionalActivitiesName = name;
 }
-
+//funkcja do otrzymania metody transportu na miejsce wypoczynku
 string Place::getTransportToThePlaceOfRest(bool firstBig)
 {
 	if (firstBig == true)
@@ -141,7 +142,7 @@ string Place::getTransportToThePlaceOfRest(bool firstBig)
 		return this->transportToThePlaceOfRest;
 	}
 }
-
+//funkcja do zapisania metody transportu na miejsce wypoczynku
 void Place::setTransportToThePlaceOfRest(string name)
 {
 	name = stringToLower(name);

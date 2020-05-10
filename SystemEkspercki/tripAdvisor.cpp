@@ -1,10 +1,12 @@
 #include "tripAdvisor.h"
 
+//funkcja do usuwania wyników z roboczej bazy danych
 void deleteFromDataBase(vector<Place>& database, string question, string answer)
 {
+	//wyszukiwanie po kategorii oraz usuwanie z roboczej bazy danych wszystkich danych które nie pasuj¹ do oczekiwanej wartoœci
 	if (question == "country")
 	{
-		for (int i = 0; i < database.size(); i++)
+		for (int i = 0; i < (int)database.size(); i++)
 		{
 			if (database[i].getCountry() != answer)
 			{
@@ -15,7 +17,7 @@ void deleteFromDataBase(vector<Place>& database, string question, string answer)
 	}
 	else if (question == "type")
 	{
-		for (int i = 0; i < database.size(); i++)
+		for (int i = 0; i < (int)database.size(); i++)
 		{
 			if (database[i].getTypeOfRest() != answer)
 			{
@@ -27,7 +29,7 @@ void deleteFromDataBase(vector<Place>& database, string question, string answer)
 	else if (question == "cost")
 	{
 		int cost = stoi(answer);
-		for (int i = 0; i < database.size(); i++)
+		for (int i = 0; i < (int)database.size(); i++)
 		{
 			if (database[i].getCostOfRest() >= cost)
 			{
@@ -38,7 +40,7 @@ void deleteFromDataBase(vector<Place>& database, string question, string answer)
 	}
 	else if (question == "purpose")
 	{
-		for (int i = 0; i < database.size(); i++)
+		for (int i = 0; i < (int)database.size(); i++)
 		{
 			if (database[i].getPurposeOfRest() != answer)
 			{
@@ -49,7 +51,7 @@ void deleteFromDataBase(vector<Place>& database, string question, string answer)
 	}
 	else if (question == "transport")
 	{
-		for (int i = 0; i < database.size(); i++)
+		for (int i = 0; i < (int)database.size(); i++)
 		{
 			if (database[i].getTransportToThePlaceOfRest() != answer && database[i].getTransportToThePlaceOfRest() != "any")
 			{
@@ -60,7 +62,7 @@ void deleteFromDataBase(vector<Place>& database, string question, string answer)
 	}
 	else if (question == "additional")
 	{
-		for (int i = 0; i < database.size(); i++)
+		for (int i = 0; i < (int)database.size(); i++)
 		{
 			if (database[i].getAdditionalActivitiesName() != answer)
 			{
@@ -70,6 +72,7 @@ void deleteFromDataBase(vector<Place>& database, string question, string answer)
 		}
 	}
 }
+//funkcja mówi¹ca o braku dopasowania
 bool databaseIsEmpty(vector<Place>& database)
 {
 	if ((int)database.size() == 0)
@@ -83,15 +86,13 @@ bool databaseIsEmpty(vector<Place>& database)
 		return false;
 	}
 }
+//funkcja do wyœwietlenia wyniku
 void printResult(vector<Place>& object)
 {
-	int randomNumber;
-	if(object.size()==1)
+	int randomNumber = 0;
+	if((int)object.size()!=1)
 	{
-		randomNumber = 0;
-	}
-	else
-	{
+		//je¿eli po zadaniu wszystkich pytañ mamy wiêcej ni¿ 1 wynik to losujemy jeden z obiektów które pozosta³y w roboczej bazie danych
 		randomNumber = rand() % object.size();
 	}
 	system("cls");
@@ -119,10 +120,12 @@ void printResult(vector<Place>& object)
 	cout << "Transport to the place of rest: " + object[randomNumber].getTransportToThePlaceOfRest(1) << endl << endl;
 	system("PAUSE");
 }
+//cia³o g³ównej funkcji doradczej
 int advice(vector<Place>& database)
 {
 	system("cls");
 	{
+		//pytanie o typ wypoczynku oraz wywo³anie funkcji do usuwania wyników z roboczej bazy danych
 		cout << "What type of vacation do you prefer?" << endl;
 		cout << "1. Active" << endl;
 		cout << "2. Passive" << endl;
@@ -141,6 +144,7 @@ int advice(vector<Place>& database)
 		}
 	}
 	{
+		//pytanie o bud¿et przeznaczony na wypoczynek oraz wywo³anie funkcji do usuwania wyników z roboczej bazy danych
 		cout << endl << "What is your travel budget?" << endl;
 		int questionCost = insertDataInt("Your budget in PLN: ", 10000);
 		deleteFromDataBase(database, "cost", to_string(questionCost));
@@ -150,6 +154,7 @@ int advice(vector<Place>& database)
 		}
 	}
 	{
+		//pytanie o cel wypoczynku oraz wywo³anie funkcji do usuwania wyników z roboczej bazy danych
 		cout << endl << "What is your purpose in travel?" << endl;
 		cout << "1. Sport" << endl;
 		cout << "2. Relax" << endl;
@@ -188,6 +193,7 @@ int advice(vector<Place>& database)
 		}
 	}
 	{
+		//pytanie o atrakcje dodatkowe podczas wypoczynku oraz wywo³anie funkcji do usuwania wyników z roboczej bazy danych
 		cout << endl << "Which of the additional activity you would like to do during your vacation?" << endl;
 		cout << "1. Go to a concert" << endl;
 		cout << "2. Visit the museum" << endl;
@@ -228,6 +234,7 @@ int advice(vector<Place>& database)
 		}
 	}
 	{
+		//pytanie o œrodek transportu na miejsce wypoczynku oraz wywo³anie funkcji do usuwania wyników z roboczej bazy danych
 		cout << endl << "How do you want to get to your vacation destination?" << endl;
 		cout << "1. Car" << endl;
 		cout << "2. Plane" << endl;
@@ -256,7 +263,7 @@ int advice(vector<Place>& database)
 			return 0;
 		}
 	}
-
+	//wywo³anie funkcji do wyœwietlenia wyniku
 	printResult(database);
 	return 0;
 }

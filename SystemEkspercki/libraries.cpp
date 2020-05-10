@@ -1,12 +1,15 @@
 #include "libraries.h"
 
+//zmienia dany string na ma³e litery
 string stringToLower(string data)
 {
 	transform(data.begin(), data.end(), data.begin(), tolower);
 	return data;
 }
+//funkcja do pobierania liczby na bazie stringa
 int insertDataInt(string comment, int max)
 {
+	//obs³uga wyj¹tków
 	try
 	{
 		int temp = stoi(insertDataString(comment));
@@ -22,6 +25,7 @@ int insertDataInt(string comment, int max)
 	}
 	return 0;
 }
+//funkcja do pobierania stringa
 string insertDataString(string comment)
 {
 	cout << comment;
@@ -29,6 +33,7 @@ string insertDataString(string comment)
 	char temp;
 	do
 	{
+		//pobieranie ci¹gu znaków a¿ do wciœniêcia klawisza ENTER lub osi¹gniêcia limitu
 		temp = getchar();
 		if (temp == EOF || temp == '\n')
 		{

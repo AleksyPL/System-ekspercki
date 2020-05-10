@@ -1,9 +1,11 @@
 #include "loadData.h"
 
+//konstruktor
 TempPlace::TempPlace()
 {
 	clearData();
 }
+//funkcja do czyszczenia danych w obiekcie
 void TempPlace::clearData()
 {
 	this->country = "";
@@ -14,8 +16,10 @@ void TempPlace::clearData()
 	this->additionalActivitiesName = "";
 	this->transportToThePlaceOfRest = "";
 }
+//funkcja do przekopiowania danych do bazy danych
 void TempPlace::copyData(vector<Place>& database)
 {
+	//je¿eli obiekt jest wype³niony poprawnie, zostanie dopisany do bazy
 	if (this->valid == true)
 	{
 		Place goalPlace;
@@ -28,18 +32,22 @@ void TempPlace::copyData(vector<Place>& database)
 		goalPlace.setTypeOfRest(this->getTypeOfRest());
 		database.push_back(goalPlace);
 	}
+	//wywo³anie funkcji czyszcz¹cej
 	clearData();
 }
+//sprawdzenie poprawnoœci wpisanych danych
 void TempPlace::isValid(vector<Place>& database)
 {
 	vector <string> purpose = { "sport","relax","food","art","culture","none" };
 	vector <string> additionalActivities = { "concert", "museum", "horse ride", "quad ride", "balloon flight", "none" };
 	vector <string> transport = { "car","plane","ship","motorbike","any" };
-	if (this->getCountry() != "" && this->getCity() != "" && this->getTypeOfRest() !="active" && this->getTypeOfRest() != "passive"
+	//sprawdzenie czy wprowadzone dane s¹ poprawne
+	if (this->getCountry() != "" && this->getCity() != "" && (this->getTypeOfRest() =="active" || this->getTypeOfRest() == "passive")
 		&& std::find(additionalActivities.begin(), additionalActivities.end(), this->getAdditionalActivitiesName()) != additionalActivities.end()
 		&& std::find(purpose.begin(), purpose.end(), this->getPurposeOfRest()) != purpose.end()
 		&& std::find(transport.begin(), transport.end(), this->getTransportToThePlaceOfRest()) != transport.end())
 	{
+		//sprawdzenie czy obiekt jest ju¿ w bazie
 		if (alreadyInDataBase(*this, database) == false)
 		{
 			this->valid = true;
@@ -53,8 +61,10 @@ void TempPlace::isValid(vector<Place>& database)
 	{
 		this->valid = false;
 	}
+	//wywo³anie funkcji do przekopiowania danych do bazy danych
 	copyData(database);
 }
+//funkcja do sprawdzania czy dany obiekt jest ju¿ w bazie danych
 bool alreadyInDataBase(TempPlace temp, vector<Place>& database)
 {
 	for (int i = 0; i < (int)database.size(); i++)
@@ -88,6 +98,7 @@ bool alreadyInDataBase(TempPlace temp, vector<Place>& database)
 	}
 	return false;
 }
+//funkcja do wczytywania bazy danych z pliku tekstowego
 void loadData(vector<Place>& database)
 {
 	database.clear();
@@ -96,6 +107,7 @@ void loadData(vector<Place>& database)
 	fstream plik;
 	int nr_linii = 0;
 	plik.open("./DataBase.txt", ios::in);
+	//wczytywanie kolejnych wierszy pliku tekstowego
 	if (plik.fail() != true)
 	{
 		while (getline(plik, linia))
@@ -138,8 +150,10 @@ void loadData(vector<Place>& database)
 		}
 	}
 	plik.close();
+	//wywo³anie komendy do nadpisania bazy danych
 	overrideDataBase(database);
 }
+//funkcja do nadpisania bazy danych
 void overrideDataBase(vector<Place>& database)
 {
 	fstream plik;
@@ -165,6 +179,7 @@ void overrideDataBase(vector<Place>& database)
 	}
 	plik.close();
 }
+//funkcja do dodawania nowego rekordu w bazie danych
 void addData(vector<Place> &database)
 {
 	system("cls");
@@ -178,16 +193,21 @@ void addData(vector<Place> &database)
 	tempObject.setPurposeOfRest(insertDataString("Insert a purpose of rest (sport, relax, food, art, culture, none): "));
 	tempObject.setAdditionalActivitiesName(insertDataString("Insert an additional activity name (concert, museum, horse ride, quad ride, balloon flight, none): "));
 	tempObject.setTransportToThePlaceOfRest(insertDataString("Insert a transport to rest place method (car, plane, ship, motorbike, any): "));
+	//wywo³anie funkcji do sprawdzenia poprawnoœci wpisanych danych
 	tempObject.isValid(database);
+	//wywo³anie komendy do nadpisania bazy danych
 	overrideDataBase(database);
+	//ponowne wczytanie bazy danych
 	loadData(database);
 }
+//funkcja do generowania bazy danych
 void generateData(vector<Place>& database, int howMany)
 {
 	srand((unsigned int)time(NULL));
 	vector <string> countries;
 	string linia;
 	fstream plik;
+	//pobranie listy pañstw z pliku tekstowego
 	plik.open("./WorldCountries.txt", ios::in);
 	if (plik.fail() != true)
 	{
@@ -198,10 +218,12 @@ void generateData(vector<Place>& database, int howMany)
 	}
 	else
 	{
+		//w przypadku braku listy wpisany zostanie 1 obiekt
 		countries.push_back("poland");
 	}
 	plik.close();
 	vector <string> cities;
+	//pobranie listy miast z pliku tekstowego
 	plik.open("./WorldCities.txt", ios::in);
 	if (plik.fail() != true)
 	{
@@ -212,22 +234,24 @@ void generateData(vector<Place>& database, int howMany)
 	}
 	else
 	{
+		//w przypadku braku listy wpisany zostanie 1 obiekt
 		cities.push_back("warsaw");
 	}
 	plik.close();
+	//utworzenie list z zawartoœci¹ do generowania rekordów bazy danych
 	vector <string> purpose = {"sport","relax","food","art","culture","none"};
 	vector <string> additionalActivities = { "concert", "museum", "horse ride", "quad ride", "balloon flight", "none" };
 	vector <string> transport = {"car","plane","ship","motorbike","any"};
 	TempPlace temp;
 	for (int i = 0; i < howMany; i++)
 	{
-		//generating countries
+		//generowanie pañstw
 		int randomNumber = rand() % countries.size();
 		temp.setCountry(countries[randomNumber]);
-		//generating city
+		//generowanie miast
 		randomNumber = rand() % cities.size();
 		temp.setCity(cities[randomNumber]);
-		//generating type of rest
+		//generowanie typu wypoczynku
 		randomNumber = rand() % 2;
 		if (randomNumber == 0)
 		{
@@ -237,16 +261,16 @@ void generateData(vector<Place>& database, int howMany)
 		{
 			temp.setTypeOfRest("passive");
 		}
-		//generating cost
+		//generowanie kosztu wypoczynku
 		randomNumber = rand() % 100;
 		temp.setCostOfRest(100 * randomNumber);
-		//genereting purpose
+		//generowanie powodu wypoczynku
 		randomNumber = rand() % purpose.size();
 		temp.setPurposeOfRest(purpose[randomNumber]);
-		//generating additional activities
+		//generowanie dodatkowych atrakcji
 		randomNumber = rand() % additionalActivities.size();
 		temp.setAdditionalActivitiesName(additionalActivities[randomNumber]);
-		//generating transport
+		//generowanie sposobu transportu na miejsce wypoczynku
 		randomNumber = rand() % transport.size();
 		temp.setTransportToThePlaceOfRest(transport[randomNumber]);
 		temp.isValid(database);
